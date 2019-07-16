@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>teste on Bruno Ferrari</title>
+    <link>/tags/teste/</link>
+    <description>Recent content in teste on Bruno Ferrari</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 09 Jul 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/teste/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Praca Pagamento</title>
+      <link>/2019/07/09/praca-pagamento/</link>
+      <pubDate>Tue, 09 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/2019/07/09/praca-pagamento/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
