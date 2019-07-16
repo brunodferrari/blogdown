@@ -22,6 +22,11 @@
 
 
 
+
+<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
 <link rel="stylesheet" href="/css/fonts.css" media="all">
 <link rel="stylesheet" href="/css/main.css" media="all">
 
@@ -57,7 +62,7 @@
 
   <article class="article">
     
-    <span class="article-duration">0 min read</span>
+    <span class="article-duration">5 min read</span>
     
 
     <h1 class="article-title">Praca Pagamento</h1>
@@ -70,7 +75,268 @@
       
 
 
-
+<div id="dados" class="section level1">
+<h1>Dados</h1>
+<pre><code>##   MÊS_REFERENCIA ID_CEDENTE CEP_SEDE_CEDENTE UF_SEDE_CEDENTE
+## 1       MAI_2019        246         83430000              PR
+##     CIDADE_SEDE_CEDENTE LATITUDE_CEDENTE_SEDE LONGITUDE_CEDENTE_SEDE
+## 1 Campina Grande do Sul             -25.17509              -48.86919
+##   CEP_COBRANCA_CEDENTE UF_COBRANCA_CEDENTE CIDADE_COBRANCA_CEDENTE
+## 1             83430000                  PR          CAMPINA GRANDE
+##   LATITUDE_CEDENTE_COBRANCA LONGITUDE_CEDENTE_COBRANCA ID_SACADO
+## 1                 -25.17509                  -48.86919       327
+##   CEP_SEDE_SACADO UF_SEDE_SACADO CIDADE_SEDE_SACADO LATITUDE_SACADO_SEDE
+## 1            &lt;NA&gt;           &lt;NA&gt;               &lt;NA&gt;                   NA
+##   LONGITUDE_SACADO_SEDE CEP_COBRANCA_SACADO UF_COBRANCA_SACADO
+## 1                    NA            81940486                 PR
+##   CIDADE_COBRANCA_SACADO LATITUDE_SACADO_COBRANCA
+## 1               CURITIBA                -25.57928
+##   LONGITUDE_SACADO_COBRANCA VALOR_PAGO_TITULO DATA_PAGAMENTO_TITULO
+## 1                 -49.27307              1000            06/05/2019
+##   QUANTIDADE_EMISSAO_SEGUNDA_VIA_BOLETO_TITULO     TITULO VALOR_TITULO
+## 1                                           NA 139904C1/4         1000
+##   DATA_VENCIMENTO_TITULO DATA_EMISSAO_TITULO TIPO_CHECAGEM
+## 1             06/05/2019               43563        Em pré
+##                 SITUACAO_CARTEIRA CEP_AGENCIA_PAGEMENTO_TITULO
+## 1 LIQUIDADO POR COBRANÇA BANCARIA                     80040310
+##   UF_PAGAMENTO_TITULO                    CIDADE_AGENCIA_PAGAMENTO_TITULO
+## 1                  PR CURITIBA                                          
+##   BANCO_PAGAMENTO_TITULO AGENCIA_PAGAMENTO_TITULO
+## 1                    237                     3127
+##   LATITUDE_PAGAMENTO_TITULO LONGITUDE_PAGAMENTO_TITULO  CEP_TED UF_TED
+## 1                  -25.4169                  -49.25397 80010010     PR
+##                                           CIDADE_TED BANCO_TED AGENCIA_TED
+## 1 CURITIBA                                                 219        3645
+##   LATITUDE_PAGAMENTO_OPERACAO LONGITUDE_PAGAMENTO_OPERACAO PLATAFORMA
+## 1                   -25.42958                    -49.26518   Curitiba
+##                CORRETOR               REGIONAL
+## 1 Denise Maria da Cunha Claudio Roberto Sillos
+##                SUPERINTENDENTE        ASSISTENTE              PRODUTO
+## 1 Ramiro Silvio Soares Pereira Edna Barros Silva Cessão de Recebiveis
+##             MODALODADE PROCV_PRACA PRACA. PRACA2 PRACA_AMBOS PRACA_PGMTO
+## 1 Cessão de Recebiveis          NA     NA     NA          NA           0
+##        VOP
+## 1 68673.96</code></pre>
+</div>
+<div id="regras" class="section level1">
+<h1>Regras</h1>
+<ul>
+<li>Regra 1: Local Liquida??o do T?tulo = Local Cedente Sede</li>
+<li>Regra 2: Local Liquida??o do T?tulo = Local Cedente Cobran?a</li>
+<li>Regra 3 e 4: Chegagem Negativa e Qnt Boleto</li>
+<li>Regra 5: Local Liquida??o do T?tulo &lt;&gt; Local Sacado</li>
+</ul>
+</div>
+<div id="regra-1" class="section level1">
+<h1>Regra 1</h1>
+<p>Vari?veis envolvidas:</p>
+<pre><code>## [1] &quot;LATITUDE_CEDENTE_SEDE&quot;                       
+## [2] &quot;LONGITUDE_CEDENTE_SEDE&quot;                      
+## [3] &quot;LATITUDE_PAGAMENTO_TITULO&quot;                   
+## [4] &quot;LONGITUDE_PAGAMENTO_TITULO&quot;                  
+## [5] &quot;QUANTIDADE_EMISSAO_SEGUNDA_VIA_BOLETO_TITULO&quot;
+## [6] &quot;TIPO_CHECAGEM&quot;</code></pre>
+<pre><code>## Com Lat-Long Sem Lat-Long 
+##        74796         6254</code></pre>
+<pre><code>## Com Lat-Long Sem Lat-Long 
+##    92.283775     7.716225</code></pre>
+<p><img src="/post/2019-07-09-praca-pagamento_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<pre><code>## Com Lat-Long Sem Lat-Long 
+##        56473        24577</code></pre>
+<pre><code>## Com Lat-Long Sem Lat-Long 
+##     69.67674     30.32326</code></pre>
+<p><img src="/post/2019-07-09-praca-pagamento_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<pre><code>## Com Lat-Long Sem Lat-Long 
+##        51928        29122</code></pre>
+<pre><code>## Com Lat-Long Sem Lat-Long 
+##     64.06909     35.93091</code></pre>
+<p><img src="/post/2019-07-09-praca-pagamento_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>Valor Operado</p>
+<pre><code>##    VOP D?spon?vel VOP N?o Dispon?vel     Total
+## 1 168008489.33000     96859592.12000 264868081
+## 2        63.43101           36.56899       100</code></pre>
+<p><img src="/post/2019-07-09-praca-pagamento_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>Aplicando a Regra:</p>
+<pre><code>## 
+##     0     1     2 
+## 72606  7294  1150</code></pre>
+<pre><code>## [1] &quot;Porcentagem Total&quot;</code></pre>
+<pre><code>## [1] 10.41826</code></pre>
+<pre><code>## [1] &quot;Porcentagem Dados V?lidos&quot;</code></pre>
+<pre><code>## Com Lat-Long 
+##     16.26098</code></pre>
+<pre><code>## 
+##     0     1     2 
+## 80846   108    96</code></pre>
+<pre><code>## [1] &quot;Porcentagem Total&quot;</code></pre>
+<pre><code>## [1] 0.2516965</code></pre>
+<pre><code>## [1] &quot;Porcentagem Dados V?lidos&quot;</code></pre>
+<pre><code>## Com Lat-Long 
+##    0.3928516</code></pre>
+<p>Valor Operado</p>
+<pre><code>##    Ind?cio    Pra?a    Total Indicio_5% Pra?a_5% Total_5%
+## 1 14629523 10599851 25229373    2299600  5742210  8041810</code></pre>
+</div>
+<div id="regra-2" class="section level1">
+<h1>Regra 2</h1>
+<p>Vari?veis envolvidas:</p>
+<pre><code>## [1] &quot;LATITUDE_CEDENTE_COBRANCA&quot;  &quot;LONGITUDE_CEDENTE_COBRANCA&quot;
+## [3] &quot;LATITUDE_PAGAMENTO_TITULO&quot;  &quot;LONGITUDE_PAGAMENTO_TITULO&quot;</code></pre>
+<pre><code>## Com Lat-Long Sem Lat-Long 
+##        72438         8612</code></pre>
+<pre><code>## Com Lat-Long Sem Lat-Long 
+##     89.37446     10.62554</code></pre>
+<p><img src="/post/2019-07-09-praca-pagamento_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<pre><code>## Com Lat-Long Sem Lat-Long 
+##        50546        30504</code></pre>
+<pre><code>## Com Lat-Long Sem Lat-Long 
+##     62.36397     37.63603</code></pre>
+<p><img src="/post/2019-07-09-praca-pagamento_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>Valor Operado</p>
+<pre><code>##    VOP D?spon?vel VOP N?o Dispon?vel     Total
+## 1 169448212.52000     95419868.93000 264868081
+## 2        63.97457           36.02543       100</code></pre>
+<p><img src="/post/2019-07-09-praca-pagamento_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<pre><code>## 
+##     0     2 
+## 72232  8818</code></pre>
+<pre><code>## [1] &quot;Porcentagem Total&quot;</code></pre>
+<pre><code>## [1] 10.8797</code></pre>
+<pre><code>## [1] &quot;Porcentagem Dados V?lidos&quot;</code></pre>
+<pre><code>## Com Lat-Long 
+##      17.4455</code></pre>
+<pre><code>## 
+##     0     2 
+## 80871   179</code></pre>
+<pre><code>## [1] &quot;Porcentagem Total&quot;</code></pre>
+<pre><code>## [1] 0.2208513</code></pre>
+<pre><code>## [1] &quot;Porcentagem Dados V?lidos&quot;</code></pre>
+<pre><code>## Com Lat-Long 
+##    0.3541329</code></pre>
+<p>Valor Operado</p>
+<pre><code>##   Ind?cio    Pra?a    Total Indicio_5% Pra?a_5% Total_5%
+## 2       0 25770016 25770016          0  8111430  8111430</code></pre>
+</div>
+<div id="regra-3-e-4" class="section level1">
+<h1>Regra 3 e 4</h1>
+<p>Nesta regra h? duas variav?is poss?veis candidatas para a “Pra?a Sacado”, o Local Sacado Sede, e o Local Sacado Cobran?a</p>
+<pre><code>## [1] &quot;LATITUDE_SACADO_SEDE&quot;                        
+## [2] &quot;LONGITUDE_SACADO_SEDE&quot;                       
+## [3] &quot;LATITUDE_SACADO_COBRANCA&quot;                    
+## [4] &quot;LONGITUDE_SACADO_COBRANCA&quot;                   
+## [5] &quot;LATITUDE_PAGAMENTO_TITULO&quot;                   
+## [6] &quot;LONGITUDE_PAGAMENTO_TITULO&quot;                  
+## [7] &quot;QUANTIDADE_EMISSAO_SEGUNDA_VIA_BOLETO_TITULO&quot;
+## [8] &quot;TIPO_CHECAGEM&quot;</code></pre>
+<p>Fazendo uma an?lise das duas v?ri?veis, vamos ver que</p>
+<pre><code>## Com Lat-Long Sem Lat-Long 
+##         2078        78972</code></pre>
+<pre><code>## Com Lat-Long Sem Lat-Long 
+##     2.563849    97.436151</code></pre>
+<p><img src="/post/2019-07-09-praca-pagamento_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<pre><code>## Com Lat-Long Sem Lat-Long 
+##        79174         1876</code></pre>
+<pre><code>## Com Lat-Long Sem Lat-Long 
+##    97.685379     2.314621</code></pre>
+<p><img src="/post/2019-07-09-praca-pagamento_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p>A base de dados para o Local Sacado Sede est? muito desfalcada, enquanto o Local Sacado Cobran?a est? quase toda dispon?vel, logo vamos utilizar como “Pra?a Sacado” a segunda v?ri?vel.</p>
+<pre><code>## Com Lat-Long Sem Lat-Long 
+##        55392        25658</code></pre>
+<pre><code>## Com Lat-Long Sem Lat-Long 
+##       68.343       31.657</code></pre>
+<p><img src="/post/2019-07-09-praca-pagamento_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p>Valor Operado</p>
+<pre><code>##    VOP D?spon?vel VOP N?o Dispon?vel     Total
+## 1 182059130.88000     82808950.57000 264868081
+## 2        68.73578           31.26422       100</code></pre>
+<p><img src="/post/2019-07-09-praca-pagamento_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p>Aplicando a Regra:</p>
+<pre><code>## 
+##     0     1     2 
+## 79485  1525    40</code></pre>
+<pre><code>## [1] &quot;Porcentagem Total&quot;</code></pre>
+<pre><code>## [1] 1.930907</code></pre>
+<pre><code>## [1] &quot;Porcentagem Dados V?lidos&quot;</code></pre>
+<pre><code>## Com Lat-Long 
+##     2.825318</code></pre>
+<pre><code>## 
+##     0     1     2 
+## 80897   143    10</code></pre>
+<pre><code>## [1] &quot;Porcentagem Total&quot;</code></pre>
+<pre><code>## [1] 0.1887724</code></pre>
+<pre><code>## [1] &quot;Porcentagem Dados V?lidos&quot;</code></pre>
+<pre><code>## Com Lat-Long 
+##    0.2762132</code></pre>
+<p>Valor Operado</p>
+<pre><code>##    Ind?cio   Pra?a    Total Indicio_5% Pra?a_5% Total_5%
+## 3 18469704 1124661 19594365    9209985 779712.7  9989698</code></pre>
+</div>
+<div id="regra-5" class="section level1">
+<h1>Regra 5</h1>
+<p>Vari?veis envolvidas:</p>
+<pre><code>## [1] &quot;LATITUDE_SACADO_COBRANCA&quot;                    
+## [2] &quot;LONGITUDE_SACADO_COBRANCA&quot;                   
+## [3] &quot;LATITUDE_PAGAMENTO_TITULO&quot;                   
+## [4] &quot;LONGITUDE_PAGAMENTO_TITULO&quot;                  
+## [5] &quot;QUANTIDADE_EMISSAO_SEGUNDA_VIA_BOLETO_TITULO&quot;
+## [6] &quot;TIPO_CHECAGEM&quot;</code></pre>
+<p>Aplicando a Regra:</p>
+<pre><code>## 
+##     0     1     2 
+## 71261  8248  1541</code></pre>
+<pre><code>## [1] &quot;Porcentagem Total&quot;</code></pre>
+<pre><code>## [1] 12.07773</code></pre>
+<pre><code>## [1] &quot;Porcentagem Dados V?lidos&quot;</code></pre>
+<pre><code>## Com Lat-Long 
+##     17.67223</code></pre>
+<pre><code>## 
+##     0     1     2 
+## 80761   140   149</code></pre>
+<pre><code>## [1] &quot;Porcentagem Total&quot;</code></pre>
+<pre><code>## [1] 0.35657</code></pre>
+<pre><code>## [1] &quot;Porcentagem Dados V?lidos&quot;</code></pre>
+<pre><code>## Com Lat-Long 
+##     0.521736</code></pre>
+<p>Valor Operado</p>
+<pre><code>##    Ind?cio    Pra?a    Total Indicio_5% Pra?a_5% Total_5%
+## 4 31177427 19383967 50561394    4076251  9938910 14015162</code></pre>
+</div>
+<div id="total" class="section level1">
+<h1>Total</h1>
+<pre><code>## Com Lat-Long Sem Lat-Long 
+##        56462        24588</code></pre>
+<pre><code>## Com Lat-Long Sem Lat-Long 
+##     69.66317     30.33683</code></pre>
+<p><img src="/post/2019-07-09-praca-pagamento_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p>Valor Operado</p>
+<pre><code>##    VOP D?spon?vel VOP N?o Dispon?vel     Total
+## 1 189453389.31000     75414692.14000 264868081
+## 2        71.52745           28.47255       100</code></pre>
+<p><img src="/post/2019-07-09-praca-pagamento_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<pre><code>## 
+##     0     1     2 
+## 62974  7767 10309</code></pre>
+<pre><code>## [1] &quot;Porcentagem Total&quot;</code></pre>
+<pre><code>## [1] 22.30228</code></pre>
+<pre><code>## [1] &quot;Porcentagem Dados V?lidos&quot;</code></pre>
+<pre><code>## Com Lat-Long 
+##     32.01445</code></pre>
+<pre><code>## 
+##     0     1     2 
+## 80584   146   320</code></pre>
+<pre><code>## [1] &quot;Porcentagem Total&quot;</code></pre>
+<pre><code>## [1] 0.5749537</code></pre>
+<pre><code>## [1] &quot;Porcentagem Dados V?lidos&quot;</code></pre>
+<pre><code>## Com Lat-Long 
+##    0.8253339</code></pre>
+<p>Valor Operado</p>
+<pre><code>##    Ind?cio    Pra?a    Total Indicio_5%   Pra?a_5% Total_5%
+## 1 14629523 10599851 25229373    2299600  5742209.7  8041810
+## 2        0 25770016 25770016          0  8111429.9  8111430
+## 3 18469704  1124661 19594365    9209985   779712.7  9989698
+## 4 31177427 19383967 50561394    4076251  9938910.4 14015162
+## 5 30110479 42537792 72648272    4316400 16278281.2 20594681</code></pre>
+</div>
 
     </div>
   </article>
@@ -93,6 +359,18 @@
 
     </div>
     
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
 
     
 
